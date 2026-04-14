@@ -76,52 +76,91 @@
 </div>
 
 <script>
-    // Navigation entre les onglets
-    function showSection(id) {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
+// --- CONFIGURATION ---
+const listePseudos = ["Cobra-12", "Eclair-05", "Robot-22", "Lune-09"]; // Ajoutez vos pseudos ici
+const lienForms = "https://forms.office.com/r/VOTRE_ID"; // Remplacez par votre lien Forms
+
+// --- GESTION DES ONGLETS ---
+function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+// --- INITIALISATION ---
+window.onload = function() {
+    const select = document.createElement('select');
+    select.id = "student-pseudo";
+    select.innerHTML = '<option value="">-- Choisis ton pseudo --</option>' + 
+        listePseudos.map(p => `<option value="${p}">${p}</option>`).join('');
+    
+    // On remplace l'input texte par la liste déroulante
+    const authArea = document.getElementById('auth-area');
+    authArea.innerHTML = '<h3>Identifie-toi</h3><p>Choisis ton pseudonyme :</p>';
+    authArea.appendChild(select);
+    authArea.innerHTML += '<br><br><button class="btn-check" onclick="startQuiz()">Accéder au Quiz</button>';
+};
+
+let currentStudent = "";
+let scoreFinal = 0;
+
+function startQuiz() {
+    currentStudent = document.getElementById('student-pseudo').value;
+    if(!currentStudent) {
+        alert("Choisis ton pseudo !");
+        return;
+    }
+    document.getElementById('auth-area').classList.add('hidden');
+    document.getElementById('quiz-area').classList.remove('hidden');
+    loadQuestions();
+}
+
+function loadQuestions() {
+    const container = document.getElementById('questions');
+    // Voici vos 3 questions
+    const qData = [
+        { q: "Question 1 : Quel est l'organe qui pompe le sang ?", a: ["Le foie", "Le cœur", "Le poumon"], correct: 1 },
+        { q: "Question 2 : La photosynthèse rejette quel gaz ?", a: ["Azote", "CO2", "Oxygène"], correct: 2 },
+        { q: "Question 3 : Quel est l'état de l'eau à 0°C ?", a: ["Liquide", "Solide", "Gazeux"], correct: 1 }
+    ];
+
+    container.innerHTML = qData.map((data, i) => `
+        <div style="margin-bottom:15px; text-align:left;">
+            <p><strong>${data.q}</strong></p>
+            ${data.a.map((ans, idx) => `
+                <label style="display:block; margin:5px 0;"><input type="radio" name="q${i}" value="${idx}"> ${ans}</label>
+            `).join('')}
+        </div>
+    `).join('');
+}
+
+function finishQuiz() {
+    let score = 0;
+    const questions = [1, 2, 1]; // Index des bonnes réponses
+    
+    for(let i=0; i<3; i++) {
+        let res = document.querySelector(`input[name="q${i}"]:checked`);
+        if(res && parseInt(res.value) === questions[i]) score++;
     }
 
-    // Gestion du Quiz
-    let currentStudent = "";
-
-    function startQuiz() {
-        currentStudent = document.getElementById('student-name').value;
-        if(currentStudent.length < 2) {
-            alert("Merci d'entrer un nom valide.");
-            return;
-        }
-        document.getElementById('auth-area').classList.add('hidden');
-        document.getElementById('quiz-area').classList.remove('hidden');
-        loadQuestions();
-    }
-
-    function loadQuestions() {
-        const container = document.getElementById('questions');
-        // Exemple de questions (on pourra les changer via le QR Code plus tard)
-        const qData = [
-            { q: "Quelle est la capitale de l'Italie ?", a: ["Milan", "Rome", "Venise"], correct: 1 },
-            { q: "Combien d'atomes d'oxygène dans H2O ?", a: ["1", "2", "3"], correct: 0 }
-        ];
-
-        container.innerHTML = qData.map((data, i) => `
-            <div style="margin-bottom:15px;">
-                <p><strong>${data.q}</strong></p>
-                ${data.a.map((ans, idx) => `
-                    <label><input type="radio" name="q${i}" value="${idx}"> ${ans}</label><br>
-                `).join('')}
-            </div>
-        `).join('');
-    }
-
-    function finishQuiz() {
-        // Logique de calcul simple pour l'instant
-        const code = Math.random().toString(36).substring(7).toUpperCase();
-        document.getElementById('quiz-area').classList.add('hidden');
-        document.getElementById('result-area').classList.remove('hidden');
-        document.getElementById('score-text').innerText = "Bravo " + currentStudent + " ! Quiz terminé.";
-        document.getElementById('validation-code').innerText = code + "-" + currentStudent[0];
-    }
+    scoreFinal = score;
+    document.getElementById('quiz-area').classList.add('hidden');
+    document.getElementById('result-area').classList.remove('hidden');
+    
+    // On affiche le résultat et un bouton pour envoyer vers Microsoft Forms
+    document.getElementById('score-text').innerHTML = 
+        `Bravo <strong>${currentStudent}</strong> !<br>Ton score est de <strong>${score} / 3</strong>`;
+    
+    // Bouton pour envoyer la note vers Forms
+    const btnForms = document.createElement('button');
+    btnForms.className = "btn-check";
+    btnForms.style.marginTop = "20px";
+    btnForms.innerText = "Enregistrer ma note sur le bureau du prof";
+    btnForms.onclick = function() {
+        // Cette URL ouvre le Forms avec le pseudo et le score (si configuré)
+        window.open(lienForms); 
+    };
+    document.getElementById('result-area').appendChild(btnForms);
+}
 </script>
 
 </body>
