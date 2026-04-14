@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Révision - Classe</title>
+    <style>
+        :root {
+            --primary: #2d6a4f;
+            --bg: #f8f9fa;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); }
+        
+        /* Navigation */
+        nav { background: var(--primary); display: flex; justify-content: space-around; padding: 15px; position: sticky; top: 0; }
+        nav button { background: none; border: none; color: white; font-weight: bold; cursor: pointer; font-size: 16px; }
+        nav button:hover { text-decoration: underline; }
+
+        /* Contenu */
+        .container { padding: 20px; max-width: 800px; margin: auto; }
+        .section { display: none; }
+        .section.active { display: block; }
+        
+        /* Cartes Quiz */
+        .quiz-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .hidden { display: none; }
+        
+        input[type="text"] { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        .btn-check { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <button onclick="showSection('fiches')">Fiches</button>
+    <button onclick="showSection('videos')">Vidéos</button>
+    <button onclick="showSection('quizz')">Quizz</button>
+</nav>
+
+<div class="container">
+    
+    <section id="fiches" class="section">
+        <h2>Mes fiches de révision</h2>
+        <p>Contenu des fiches à venir...</p>
+    </section>
+
+    <section id="videos" class="section">
+        <h2>Vidéos de cours</h2>
+        <p>Lien vers les vidéos Youtube ou PeerTube...</p>
+    </section>
+
+    <section id="quizz" class="section active">
+        <h2>Espace Quizz</h2>
+        
+        <div id="auth-area" class="quiz-card">
+            <h3>Identifie-toi</h3>
+            <p>Entre ton prénom ou ton pseudonyme :</p>
+            <input type="text" id="student-name" placeholder="Ex: Jules ou Eleve_A1">
+            <button class="btn-check" onclick="startQuiz()">Accéder aux questions</button>
+        </div>
+
+        <div id="quiz-area" class="quiz-card hidden">
+            <h3 id="quiz-title">Quiz du jour</h3>
+            <div id="questions">
+                </div>
+            <button class="btn-check" onclick="finishQuiz()">Terminer le quiz</button>
+        </div>
+
+        <div id="result-area" class="quiz-card hidden">
+            <h3>Résultat</h3>
+            <p id="score-text"></p>
+            <p style="font-size: 0.8em; color: gray;">Note ce code sur ton cahier : <span id="validation-code"></span></p>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    // Navigation entre les onglets
+    function showSection(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    // Gestion du Quiz
+    let currentStudent = "";
+
+    function startQuiz() {
+        currentStudent = document.getElementById('student-name').value;
+        if(currentStudent.length < 2) {
+            alert("Merci d'entrer un nom valide.");
+            return;
+        }
+        document.getElementById('auth-area').classList.add('hidden');
+        document.getElementById('quiz-area').classList.remove('hidden');
+        loadQuestions();
+    }
+
+    function loadQuestions() {
+        const container = document.getElementById('questions');
+        // Exemple de questions (on pourra les changer via le QR Code plus tard)
+        const qData = [
+            { q: "Quelle est la capitale de l'Italie ?", a: ["Milan", "Rome", "Venise"], correct: 1 },
+            { q: "Combien d'atomes d'oxygène dans H2O ?", a: ["1", "2", "3"], correct: 0 }
+        ];
+
+        container.innerHTML = qData.map((data, i) => `
+            <div style="margin-bottom:15px;">
+                <p><strong>${data.q}</strong></p>
+                ${data.a.map((ans, idx) => `
+                    <label><input type="radio" name="q${i}" value="${idx}"> ${ans}</label><br>
+                `).join('')}
+            </div>
+        `).join('');
+    }
+
+    function finishQuiz() {
+        // Logique de calcul simple pour l'instant
+        const code = Math.random().toString(36).substring(7).toUpperCase();
+        document.getElementById('quiz-area').classList.add('hidden');
+        document.getElementById('result-area').classList.remove('hidden');
+        document.getElementById('score-text').innerText = "Bravo " + currentStudent + " ! Quiz terminé.";
+        document.getElementById('validation-code').innerText = code + "-" + currentStudent[0];
+    }
+</script>
+
+</body>
+</html>
