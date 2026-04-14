@@ -116,14 +116,37 @@ function startQuiz() {
 
 function loadQuestions() {
     const container = document.getElementById('questions');
-    // Voici vos 3 questions
-    const qData = [
-        { q: "Question 1 : Quel est l'organe qui pompe le sang ?", a: ["Le foie", "Le cœur", "Le poumon"], correct: 1 },
-        { q: "Question 2 : La photosynthèse rejette quel gaz ?", a: ["Azote", "CO2", "Oxygène"], correct: 2 },
-        { q: "Question 3 : Quel est l'état de l'eau à 0°C ?", a: ["Liquide", "Solide", "Gazeux"], correct: 1 }
-    ];
+    
+    // 1. On regarde quel quiz est demandé dans l'URL (ex: ?quiz=2)
+    const urlParams = new URLSearchParams(window.location.search);
+    const quizId = urlParams.get('quiz') || "1"; // Par défaut, c'est le quiz 1
 
-    container.innerHTML = qData.map((data, i) => `
+    // 2. Votre base de données de quiz
+    const banqueDeQuizz = {
+        "1": {
+            titre: "Quiz SVT - Les Cellules",
+            questions: [
+                { q: "Où se trouve l'ADN ?", a: ["Noyau", "Cytoplasme", "Membrane"], correct: 0 },
+                { q: "La cellule végétale a une paroi ?", a: ["Oui", "Non"], correct: 0 },
+                { q: "Unité du vivant ?", a: ["Atome", "Cellule", "Organe"], correct: 1 }
+            ]
+        },
+        "2": {
+            titre: "Quiz SVT - La Digestion",
+            questions: [
+                { q: "Où commence la digestion ?", a: ["Estomac", "Bouche", "Intestin"], correct: 1 },
+                { q: "Rôle de la salive ?", a: ["Protection", "Digestion chimique", "Rien"], correct: 1 },
+                { q: "Longueur intestin grêle ?", a: ["1m", "3m", "6m"], correct: 2 }
+            ]
+        }
+    };
+
+    // 3. On récupère les données du quiz choisi
+    const quizActuel = banqueDeQuizz[quizId] || banqueDeQuizz["1"];
+    document.getElementById('quiz-title').innerText = quizActuel.titre;
+
+    // 4. On affiche les questions
+    container.innerHTML = quizActuel.questions.map((data, i) => `
         <div style="margin-bottom:15px; text-align:left;">
             <p><strong>${data.q}</strong></p>
             ${data.a.map((ans, idx) => `
@@ -131,8 +154,10 @@ function loadQuestions() {
             `).join('')}
         </div>
     `).join('');
+    
+    // On stocke les bonnes réponses pour le calcul final
+    window.currentCorrectAnswers = quizActuel.questions.map(q => q.correct);
 }
-
 function finishQuiz() {
     let score = 0;
     const questions = [1, 2, 1]; // Index des bonnes réponses
