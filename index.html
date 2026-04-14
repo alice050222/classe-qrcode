@@ -5,28 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espace Révision - Classe</title>
     <style>
-        :root {
-            --primary: #2d6a4f;
-            --bg: #f8f9fa;
+        :root { 
+            --primary: #2d6a4f; 
+            --bg: #f8f9fa; 
+            --white: #ffffff;
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); }
         
-        /* Navigation */
-        nav { background: var(--primary); display: flex; justify-content: space-around; padding: 15px; position: sticky; top: 0; }
-        nav button { background: none; border: none; color: white; font-weight: bold; cursor: pointer; font-size: 16px; }
-        nav button:hover { text-decoration: underline; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            background: var(--bg); 
+            color: #333;
+            padding-bottom: 50px;
+        }
 
-        /* Contenu */
-        .container { padding: 20px; max-width: 800px; margin: auto; }
-        .section { display: none; }
+        /* Barre de navigation fixe */
+        nav { 
+            background: var(--primary); 
+            display: flex; 
+            justify-content: space-around; 
+            padding: 15px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav button { 
+            background: none; 
+            border: none; 
+            color: white; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 16px; 
+        }
+
+        .container { 
+            padding: 20px; 
+            max-width: 600px; 
+            margin: auto; 
+        }
+
+        .section { display: none; animation: fadeIn 0.3s; }
         .section.active { display: block; }
-        
-        /* Cartes Quiz */
-        .quiz-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Style des cartes */
+        .quiz-card { 
+            background: var(--white); 
+            padding: 25px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            margin-bottom: 20px; 
+            text-align: center; 
+        }
+
         .hidden { display: none; }
-        
-        input[type="text"] { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
-        .btn-check { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+
+        /* Éléments de formulaire pour mobile */
+        select { 
+            width: 100%; 
+            padding: 15px; 
+            font-size: 18px; 
+            border-radius: 10px; 
+            border: 2px solid var(--primary); 
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        .btn-check { 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            padding: 15px 25px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-size: 18px; 
+            width: 100%; 
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .btn-check:active { transform: scale(0.95); }
+
+        label { 
+            display: block; 
+            margin: 15px 0; 
+            font-size: 18px; 
+            text-align: left; 
+            padding: 12px; 
+            border: 1px solid #eee; 
+            border-radius: 10px;
+            background: #fafafa;
+            cursor: pointer;
+        }
+
+        input[type="radio"] { 
+            transform: scale(1.7); 
+            margin-right: 15px; 
+            accent-color: var(--primary);
+        }
+
+        h2 { color: var(--primary); }
     </style>
 </head>
 <body>
@@ -40,147 +124,163 @@
 <div class="container">
     
     <section id="fiches" class="section">
-        <h2>Mes fiches de révision</h2>
-        <p>Contenu des fiches à venir...</p>
+        <h2>Fiches de révision</h2>
+        <div class="quiz-card">
+            <p>Ici, tu trouveras les fiches PDF ou les résumés du cours.</p>
+        </div>
     </section>
 
     <section id="videos" class="section">
         <h2>Vidéos de cours</h2>
-        <p>Lien vers les vidéos Youtube ou PeerTube...</p>
+        <div class="quiz-card">
+            <p>Regarde les vidéos pour réviser avant le quiz !</p>
+        </div>
     </section>
 
     <section id="quizz" class="section active">
-        <h2>Espace Quizz</h2>
         
         <div id="auth-area" class="quiz-card">
-            <h3>Identifie-toi</h3>
-            <p>Entre ton prénom ou ton pseudonyme :</p>
-            <input type="text" id="student-name" placeholder="Ex: Jules ou Eleve_A1">
+            <h3>Espace Évaluation</h3>
+            <p>Sélectionne ton pseudonyme pour commencer :</p>
+            <div id="pseudo-container"></div>
             <button class="btn-check" onclick="startQuiz()">Accéder aux questions</button>
         </div>
 
         <div id="quiz-area" class="quiz-card hidden">
-            <h3 id="quiz-title">Quiz du jour</h3>
-            <div id="questions">
-                </div>
-            <button class="btn-check" onclick="finishQuiz()">Terminer le quiz</button>
+            <h2 id="quiz-title">Quiz</h2>
+            <div id="questions"></div>
+            <button class="btn-check" onclick="finishQuiz()">Valider mes réponses</button>
         </div>
 
         <div id="result-area" class="quiz-card hidden">
             <h3>Résultat</h3>
-            <p id="score-text"></p>
-            <p style="font-size: 0.8em; color: gray;">Note ce code sur ton cahier : <span id="validation-code"></span></p>
+            <div id="score-text" style="font-size: 22px; margin-bottom: 25px;"></div>
+            <div id="forms-button-container"></div>
+            <p style="margin-top: 20px; font-size: 14px; color: #666;">
+                N'oublie pas de cliquer sur le bouton ci-dessus pour envoyer ta note au prof.
+            </p>
         </div>
     </section>
-
 </div>
+
 <script>
-// --- CONFIGURATION ---
-const listePseudos = ["Cobra-12", "Eclair-05", "Robot-22", "Lune-09"]; // Vos pseudos
-// COLLEZ VOTRE LIEN ICI (Attention à bien garder les guillemets)
+// --- 1. CONFIGURATION ---
+// Ajoute ou modifie tes pseudos ici
+const listePseudos = ["Cobra-12", "Eclair-05", "Robot-22", "Lune-09", "Panda-X", "Aigle-44", "Renard-07", "Lion-13"]; 
+
+// REMPLACE LE LIEN CI-DESSOUS PAR TON LIEN GOOGLE FORMS PRÉ-REMPLI
 const lienBaseForms = "https://docs.google.com/forms/d/e/1FAIpQLSf_X-vICKj2mszRqxCWD9gafLorf-qVy5kv4WGGEFI4gWL29Q/viewform?usp=pp_url&entry.1954381270=NOM_ICI&entry.1875996275=NOTE_ICI
 "; 
 
-// --- GESTION DES ONGLETS ---
+// --- 2. BANQUE DE QUESTIONS ---
+const banqueDeQuizz = {
+    "1": {
+        titre: "Quiz 1 : Les Cellules",
+        questions: [
+            { q: "Où se trouve l'ADN dans une cellule animale ?", a: ["Dans le noyau", "Dans le cytoplasme", "Sur la membrane"], correct: 0 },
+            { q: "La cellule végétale possède-t-elle une paroi ?", a: ["Oui", "Non"], correct: 0 },
+            { q: "Quelle est la plus petite unité du vivant ?", a: ["L'atome", "La cellule", "L'organe"], correct: 1 }
+        ]
+    },
+    "2": {
+        titre: "Quiz 2 : La Digestion",
+        questions: [
+            { q: "Où commence la digestion des aliments ?", a: ["Dans l'estomac", "Dans la bouche", "Dans l'intestin"], correct: 1 },
+            { q: "Quel est le rôle de la salive ?", a: ["Protéger les dents", "Commencer la digestion chimique"], correct: 1 },
+            { q: "Quelle est la longueur moyenne de l'intestin grêle ?", a: ["1 mètre", "3 mètres", "6 mètres"], correct: 2 }
+        ]
+    }
+};
+
+// --- 3. LOGIQUE FONCTIONNELLE ---
+let currentQuiz = null;
+let currentStudentName = "";
+
+// Navigation entre onglets
 function showSection(id) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
 }
 
-// --- INITIALISATION AU CHARGEMENT ---
+// Initialisation au chargement
 window.onload = function() {
-    const select = document.createElement('select');
-    select.id = "student-pseudo";
-    select.style.fontSize = "18px"; // Plus gros pour mobile
-    select.style.padding = "10px";
-    select.innerHTML = '<option value="">-- Choisis ton pseudo --</option>' + 
-        listePseudos.map(p => `<option value="${p}">${p}</option>`).join('');
+    // Remplissage de la liste de pseudos
+    const container = document.getElementById('pseudo-container');
+    let html = '<select id="student-pseudo"><option value="">-- Choisis ton nom --</option>';
+    listePseudos.sort().forEach(p => {
+        html += `<option value="${p}">${p}</option>`;
+    });
+    html += '</select>';
+    container.innerHTML = html;
     
-    const authArea = document.getElementById('auth-area');
-    authArea.innerHTML = '<h3>Identifie-toi</h3><p>Choisis ton pseudonyme :</p>';
-    authArea.appendChild(select);
-    authArea.innerHTML += '<br><br><button class="btn-check" onclick="startQuiz()">Accéder au Quiz</button>';
-    
-    loadQuestions(); // Prépare les questions selon l'URL (?quiz=1)
-};
-
-let currentStudent = "";
-let scoreFinal = 0;
-
-function loadQuestions() {
-    const container = document.getElementById('questions');
+    // Détection du quiz dans l'URL (?quiz=1)
     const urlParams = new URLSearchParams(window.location.search);
     const quizId = urlParams.get('quiz') || "1";
+    currentQuiz = banqueDeQuizz[quizId] || banqueDeQuizz["1"];
+};
 
-    const banqueDeQuizz = {
-        "1": {
-            titre: "Quiz SVT - Les Cellules",
-            questions: [
-                { q: "Où se trouve l'ADN ?", a: ["Noyau", "Cytoplasme", "Membrane"], correct: 0 },
-                { q: "La cellule végétale a une paroi ?", a: ["Oui", "Non"], correct: 0 },
-                { q: "Unité du vivant ?", a: ["Atome", "Cellule", "Organe"], correct: 1 }
-            ]
-        },
-        "2": {
-            titre: "Quiz SVT - La Digestion",
-            questions: [
-                { q: "Où commence la digestion ?", a: ["Estomac", "Bouche", "Intestin"], correct: 1 },
-                { q: "Rôle de la salive ?", a: ["Protection", "Digestion chimique", "Rien"], correct: 1 },
-                { q: "Longueur intestin grêle ?", a: ["1m", "3m", "6m"], correct: 2 }
-            ]
-        }
-    };
-
-    const quizActuel = banqueDeQuizz[quizId] || banqueDeQuizz["1"];
-    document.getElementById('quiz-title').innerText = quizActuel.titre;
-
-    container.innerHTML = quizActuel.questions.map((data, i) => `
-        <div style="margin-bottom:20px; text-align:left; border-bottom: 1px solid #eee; padding-bottom: 10px;">
-            <p style="font-size:18px;"><strong>${data.q}</strong></p>
-            ${data.a.map((ans, idx) => `
-                <label style="display:block; margin:15px 0; font-size:17px;"><input type="radio" name="q${i}" value="${idx}" style="transform: scale(1.5); margin-right:10px;"> ${ans}</label>
+// Lancement du quiz
+function startQuiz() {
+    const pseudoSelect = document.getElementById('student-pseudo');
+    if(!pseudoSelect.value) {
+        alert("Attention : Choisis ton pseudonyme avant de commencer !");
+        return;
+    }
+    
+    currentStudentName = pseudoSelect.value;
+    document.getElementById('auth-area').classList.add('hidden');
+    document.getElementById('quiz-area').classList.remove('hidden');
+    
+    document.getElementById('quiz-title').innerText = currentQuiz.titre;
+    const qContainer = document.getElementById('questions');
+    
+    qContainer.innerHTML = currentQuiz.questions.map((q, i) => `
+        <div style="margin-bottom:30px; border-bottom:1px dotted #ccc; padding-bottom:15px;">
+            <p style="text-align:left; font-size:18px;"><strong>${i+1}. ${q.q}</strong></p>
+            ${q.a.map((ans, idx) => `
+                <label>
+                    <input type="radio" name="q${i}" value="${idx}"> ${ans}
+                </label>
             `).join('')}
         </div>
     `).join('');
-    
-    window.currentCorrectAnswers = quizActuel.questions.map(q => q.correct);
 }
 
-function startQuiz() {
-    currentStudent = document.getElementById('student-pseudo').value;
-    if(!currentStudent) {
-        alert("Choisis ton pseudo !");
-        return;
-    }
-    document.getElementById('auth-area').classList.add('hidden');
-    document.getElementById('quiz-area').classList.remove('hidden');
-}
-
+// Fin du quiz et calcul du score
 function finishQuiz() {
     let score = 0;
-    const bonnesReponses = window.currentCorrectAnswers;
+    let totalQuestions = currentQuiz.questions.length;
     
-    for(let i=0; i<bonnesReponses.length; i++) {
-        let res = document.querySelector(`input[name="q${i}"]:checked`);
-        if(res && parseInt(res.value) === bonnesReponses[i]) score++;
+    // Vérification des réponses
+    for(let i=0; i < totalQuestions; i++) {
+        const selection = document.querySelector(`input[name="q${i}"]:checked`);
+        if(selection && parseInt(selection.value) === currentQuiz.questions[i].correct) {
+            score++;
+        }
     }
 
+    // Affichage des résultats
     document.getElementById('quiz-area').classList.add('hidden');
     document.getElementById('result-area').classList.remove('hidden');
-    document.getElementById('score-text').innerHTML = `Bravo <strong>${currentStudent}</strong> !<br>Ton score : <strong>${score} / ${bonnesReponses.length}</strong>`;
     
-    // CONSTRUCTION DU LIEN MAGIQUE
-    // On remplace NOM_ICI et NOTE_ICI par les vraies valeurs
-    let lienFinal = lienBaseForms.replace("NOM_ICI", encodeURIComponent(currentStudent));
+    document.getElementById('score-text').innerHTML = `
+        Bravo <strong>${currentStudentName}</strong> !<br><br>
+        Ton score final est de :<br>
+        <span style="font-size:40px; color:var(--primary); font-weight:bold;">${score} / ${totalQuestions}</span>
+    `;
+
+    // Préparation du bouton Google Forms
+    // On injecte les données dans le lien pré-rempli
+    let lienFinal = lienBaseForms.replace("NOM_ICI", encodeURIComponent(currentStudentName));
     lienFinal = lienFinal.replace("NOTE_ICI", encodeURIComponent(score));
 
-    const btnForms = document.createElement('button');
-    btnForms.className = "btn-check";
-    btnForms.style.marginTop = "20px";
-    btnForms.innerText = "Transmettre ma note au professeur";
-    btnForms.onclick = function() { window.location.href = lienFinal; };
-    document.getElementById('result-area').appendChild(btnForms);
+    document.getElementById('forms-button-container').innerHTML = `
+        <button class="btn-check" onclick="window.location.href='${lienFinal}'">
+            📤 Envoyer ma note au professeur
+        </button>
+    `;
 }
+</script>
 
 </body>
 </html>
