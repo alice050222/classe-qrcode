@@ -3,284 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espace Révision - Classe</title>
+    <title>Espace Révision</title>
     <style>
-        :root { 
-            --primary: #2d6a4f; 
-            --bg: #f8f9fa; 
-            --white: #ffffff;
-        }
-        
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin: 0; 
-            background: var(--bg); 
-            color: #333;
-            padding-bottom: 50px;
-        }
-
-        /* Barre de navigation fixe */
-        nav { 
-            background: var(--primary); 
-            display: flex; 
-            justify-content: space-around; 
-            padding: 15px; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        nav button { 
-            background: none; 
-            border: none; 
-            color: white; 
-            font-weight: bold; 
-            cursor: pointer; 
-            font-size: 16px; 
-        }
-
-        .container { 
-            padding: 20px; 
-            max-width: 600px; 
-            margin: auto; 
-        }
-
-        .section { display: none; animation: fadeIn 0.3s; }
-        .section.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Style des cartes */
-        .quiz-card { 
-            background: var(--white); 
-            padding: 25px; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            margin-bottom: 20px; 
-            text-align: center; 
-        }
-
+        :root { --primary: #2d6a4f; --bg: #f8f9fa; }
+        body { font-family: sans-serif; margin: 0; background: var(--bg); padding: 0; }
+        nav { background: var(--primary); display: flex; justify-content: space-around; padding: 15px; }
+        nav button { background: none; border: none; color: white; font-weight: bold; cursor: pointer; }
+        .container { padding: 20px; max-width: 500px; margin: auto; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
         .hidden { display: none; }
-
-        /* Éléments de formulaire pour mobile */
-        select { 
-            width: 100%; 
-            padding: 15px; 
-            font-size: 18px; 
-            border-radius: 10px; 
-            border: 2px solid var(--primary); 
-            margin: 20px 0;
-            background-color: white;
-        }
-
-        .btn-check { 
-            background: var(--primary); 
-            color: white; 
-            border: none; 
-            padding: 15px 25px; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            font-size: 18px; 
-            width: 100%; 
-            font-weight: bold;
-            transition: transform 0.2s;
-        }
-
-        .btn-check:active { transform: scale(0.95); }
-
-        label { 
-            display: block; 
-            margin: 15px 0; 
-            font-size: 18px; 
-            text-align: left; 
-            padding: 12px; 
-            border: 1px solid #eee; 
-            border-radius: 10px;
-            background: #fafafa;
-            cursor: pointer;
-        }
-
-        input[type="radio"] { 
-            transform: scale(1.7); 
-            margin-right: 15px; 
-            accent-color: var(--primary);
-        }
-
-        h2 { color: var(--primary); }
+        select { width: 100%; padding: 12px; font-size: 16px; margin: 20px 0; border: 2px solid var(--primary); border-radius: 8px; }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; }
+        label { display: block; margin: 15px 0; padding: 10px; border: 1px solid #ddd; border-radius: 8px; text-align: left; background: #fff; }
+        input[type="radio"] { transform: scale(1.5); margin-right: 10px; }
+        .section { display: none; }
+        .section.active { display: block; }
     </style>
 </head>
 <body>
 
 <nav>
-    <button onclick="showSection('fiches')">Fiches</button>
-    <button onclick="showSection('videos')">Vidéos</button>
-    <button onclick="showSection('quizz')">Quizz</button>
+    <button onclick="changeSection('fiches')">Fiches</button>
+    <button onclick="changeSection('videos')">Vidéos</button>
+    <button onclick="changeSection('quizz')">Quizz</button>
 </nav>
 
 <div class="container">
-    
-    <section id="fiches" class="section">
-        <h2>Fiches de révision</h2>
-        <div class="quiz-card">
-            <p>Ici, tu trouveras les fiches PDF ou les résumés du cours.</p>
-        </div>
-    </section>
-
-    <section id="videos" class="section">
-        <h2>Vidéos de cours</h2>
-        <div class="quiz-card">
-            <p>Regarde les vidéos pour réviser avant le quiz !</p>
-        </div>
-    </section>
+    <section id="fiches" class="section"><h2>Fiches</h2><div class="card">Contenu bientôt là.</div></section>
+    <section id="videos" class="section"><h2>Vidéos</h2><div class="card">Vidéos bientôt là.</div></section>
 
     <section id="quizz" class="section active">
-        
-        <div id="auth-area" class="quiz-card">
-            <h3>Espace Évaluation</h3>
-            <p>Sélectionne ton pseudonyme pour commencer :</p>
-            <div id="pseudo-container"></div>
-            <button class="btn-check" onclick="startQuiz()">Accéder aux questions</button>
+        <div id="step1" class="card">
+            <h3>Ton Pseudo</h3>
+            <select id="select-pseudo">
+                <option value="">-- Choisis ici --</option>
+            </select>
+            <button class="btn" onclick="goStep2()">Commencer</button>
         </div>
 
-        <div id="quiz-area" class="quiz-card hidden">
-            <h2 id="quiz-title">Quiz</h2>
-            <div id="questions"></div>
-            <button class="btn-check" onclick="finishQuiz()">Valider mes réponses</button>
+        <div id="step2" class="card hidden">
+            <h2 id="titre-quiz">Quiz</h2>
+            <div id="questions-box"></div>
+            <button class="btn" onclick="goStep3()">Valider</button>
         </div>
 
-        <div id="result-area" class="quiz-card hidden">
+        <div id="step3" class="card hidden">
             <h3>Résultat</h3>
-            <div id="score-text" style="font-size: 22px; margin-bottom: 25px;"></div>
-            <div id="forms-button-container"></div>
-            <p style="margin-top: 20px; font-size: 14px; color: #666;">
-                N'oublie pas de cliquer sur le bouton ci-dessus pour envoyer ta note au prof.
-            </p>
+            <p id="score-txt" style="font-size: 24px; font-weight: bold;"></p>
+            <div id="btn-container"></div>
         </div>
     </section>
 </div>
 
 <script>
-// --- 1. CONFIGURATION ---
-// Ajoute ou modifie tes pseudos ici
-const listePseudos = ["Cobra-12", "Eclair-05", "Robot-22", "Lune-09", "Panda-X", "Aigle-44", "Renard-07", "Lion-13", "Panda-16"]; 
+// --- CONFIGURATION ---
+const mesPseudos = ["Cobra-12", "Eclair-05", "Robot-22", "Lune-09", "Panda-X", "Aigle-44"]; 
+const lienForms = "https://docs.google.com/forms/d/e/1FAIpQLSf_X-vICKj2mszRqxCWD9gafLorf-qVy5kv4WGGEFI4gWL29Q/viewform?usp=pp_url&entry.1954381270=NOM_ICI&entry.1875996275=NOTE_ICI
+"; // 
 
-// REMPLACE LE LIEN CI-DESSOUS PAR TON LIEN GOOGLE FORMS PRÉ-REMPLI
-const lienBaseForms = "https://docs.google.com/forms/d/e/1FAIpQLSf_X-vICKj2mszRqxCWD9gafLorf-qVy5kv4WGGEFI4gWL29Q/viewform?usp=pp_url&entry.1954381270=NOM_ICI&entry.1875996275=NOTE_ICI
-"; 
-
-// --- 2. BANQUE DE QUESTIONS ---
-const banqueDeQuizz = {
-    "1": {
-        titre: "Quiz 1 : Les Cellules",
-        questions: [
-            { q: "Où se trouve l'ADN dans une cellule animale ?", a: ["Dans le noyau", "Dans le cytoplasme", "Sur la membrane"], correct: 0 },
-            { q: "La cellule végétale possède-t-elle une paroi ?", a: ["Oui", "Non"], correct: 0 },
-            { q: "Quelle est la plus petite unité du vivant ?", a: ["L'atome", "La cellule", "L'organe"], correct: 1 }
-        ]
-    },
-    "2": {
-        titre: "Quiz 2 : La Digestion",
-        questions: [
-            { q: "Où commence la digestion des aliments ?", a: ["Dans l'estomac", "Dans la bouche", "Dans l'intestin"], correct: 1 },
-            { q: "Quel est le rôle de la salive ?", a: ["Protéger les dents", "Commencer la digestion chimique"], correct: 1 },
-            { q: "Quelle est la longueur moyenne de l'intestin grêle ?", a: ["1 mètre", "3 mètres", "6 mètres"], correct: 2 }
-        ]
-    }
+const mesQuiz = {
+    "1": { t: "Les Cellules", q: [
+        {txt: "L'ADN est dans ?", a: ["Le noyau", "Le cytoplasme"], c: 0},
+        {txt: "Cellule végétale ?", a: ["Oui", "Non"], c: 0}
+    ]},
+    "2": { t: "La Digestion", q: [
+        {txt: "Début digestion ?", a: ["Bouche", "Estomac"], c: 0},
+        {txt: "Rôle salive ?", a: ["Digestion", "Rien"], c: 0}
+    ]}
 };
 
-// --- 3. LOGIQUE FONCTIONNELLE ---
-let currentQuiz = null;
-let currentStudentName = "";
+// --- LOGIQUE ---
+let quizChoisi = null;
+let pseudoEleve = "";
 
-// Navigation entre onglets
-function showSection(id) {
+function changeSection(id) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
 }
 
-// Initialisation au chargement
 window.onload = function() {
-    // Remplissage de la liste de pseudos
-    const container = document.getElementById('pseudo-container');
-    let html = '<select id="student-pseudo"><option value="">-- Choisis ton nom --</option>';
-    listePseudos.sort().forEach(p => {
-        html += `<option value="${p}">${p}</option>`;
+    // Remplir la liste
+    const sel = document.getElementById('select-pseudo');
+    mesPseudos.sort().forEach(p => {
+        let opt = document.createElement('option');
+        opt.value = p; opt.innerText = p;
+        sel.appendChild(opt);
     });
-    html += '</select>';
-    container.innerHTML = html;
-    
-    // Détection du quiz dans l'URL (?quiz=1)
-    const urlParams = new URLSearchParams(window.location.search);
-    const quizId = urlParams.get('quiz') || "1";
-    currentQuiz = banqueDeQuizz[quizId] || banqueDeQuizz["1"];
+
+    // Charger le quiz
+    const p = new URLSearchParams(window.location.search);
+    const id = p.get('quiz') || "1";
+    quizChoisi = mesQuiz[id] || mesQuiz["1"];
 };
 
-// Lancement du quiz
-function startQuiz() {
-    const pseudoSelect = document.getElementById('student-pseudo');
-    if(!pseudoSelect.value) {
-        alert("Attention : Choisis ton pseudonyme avant de commencer !");
-        return;
-    }
+function goStep2() {
+    pseudoEleve = document.getElementById('select-pseudo').value;
+    if(!pseudoEleve) { alert("Choisis ton nom !"); return; }
     
-    currentStudentName = pseudoSelect.value;
-    document.getElementById('auth-area').classList.add('hidden');
-    document.getElementById('quiz-area').classList.remove('hidden');
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+    document.getElementById('titre-quiz').innerText = quizChoisi.t;
     
-    document.getElementById('quiz-title').innerText = currentQuiz.titre;
-    const qContainer = document.getElementById('questions');
-    
-    qContainer.innerHTML = currentQuiz.questions.map((q, i) => `
-        <div style="margin-bottom:30px; border-bottom:1px dotted #ccc; padding-bottom:15px;">
-            <p style="text-align:left; font-size:18px;"><strong>${i+1}. ${q.q}</strong></p>
-            ${q.a.map((ans, idx) => `
-                <label>
-                    <input type="radio" name="q${i}" value="${idx}"> ${ans}
-                </label>
-            `).join('')}
-        </div>
-    `).join('');
+    let html = "";
+    quizChoisi.q.forEach((q, i) => {
+        html += `<p style="text-align:left"><strong>${q.txt}</strong></p>`;
+        q.a.forEach((ans, idx) => {
+            html += `<label><input type="radio" name="q${i}" value="${idx}"> ${ans}</label>`;
+        });
+    });
+    document.getElementById('questions-box').innerHTML = html;
 }
 
-// Fin du quiz et calcul du score
-function finishQuiz() {
+function goStep3() {
     let score = 0;
-    let totalQuestions = currentQuiz.questions.length;
-    
-    // Vérification des réponses
-    for(let i=0; i < totalQuestions; i++) {
-        const selection = document.querySelector(`input[name="q${i}"]:checked`);
-        if(selection && parseInt(selection.value) === currentQuiz.questions[i].correct) {
-            score++;
-        }
-    }
+    quizChoisi.q.forEach((q, i) => {
+        let r = document.querySelector(`input[name="q${i}"]:checked`);
+        if(r && parseInt(r.value) === q.c) score++;
+    });
 
-    // Affichage des résultats
-    document.getElementById('quiz-area').classList.add('hidden');
-    document.getElementById('result-area').classList.remove('hidden');
-    
-    document.getElementById('score-text').innerHTML = `
-        Bravo <strong>${currentStudentName}</strong> !<br><br>
-        Ton score final est de :<br>
-        <span style="font-size:40px; color:var(--primary); font-weight:bold;">${score} / ${totalQuestions}</span>
-    `;
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('step3').classList.remove('hidden');
+    document.getElementById('score-txt').innerText = score + " / " + quizChoisi.q.length;
 
-    // Préparation du bouton Google Forms
-    // On injecte les données dans le lien pré-rempli
-    let lienFinal = lienBaseForms.replace("NOM_ICI", encodeURIComponent(currentStudentName));
-    lienFinal = lienFinal.replace("NOTE_ICI", encodeURIComponent(score));
-
-    document.getElementById('forms-button-container').innerHTML = `
-        <button class="btn-check" onclick="window.location.href='${lienFinal}'">
-            📤 Envoyer ma note au professeur
-        </button>
-    `;
+    let finalLink = lienForms.replace("NOM_ICI", encodeURIComponent(pseudoEleve)).replace("NOTE_ICI", score);
+    document.getElementById('btn-container').innerHTML = `<button class="btn" onclick="window.location.href='${finalLink}'">📤 Envoyer ma note</button>`;
 }
 </script>
-
 </body>
 </html>
