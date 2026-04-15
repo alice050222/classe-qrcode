@@ -48,33 +48,54 @@
 <section id="fiches" class="section">
         <div class="card">
             <h2>Fiches de révision</h2>
-            
-            <h3>2nde Bac Pro</h3>
-            <p><a href="#">Maths</a> | <a href="#">Sciences</a></p>
-            <hr>
-            
-            <h3>1ère Bac Pro</h3>
-            <p><a href="Formules_maths_1ère.pdf" target="_blank">Maths</a> | <a href="#">Sciences</a></p>
-            
-            <h3>Tle Bac Pro</h3>
-            <p><a href="#">Maths</a> | <a href="#">Sciences</a></p>
+            <div id="fiches-levels">
+                <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('fiches', '2nd')">2nd Bac Pro</button>
+                <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('fiches', '1ere')">1ère Bac Pro</button>
+                <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('fiches', 'tle')">Tle Bac Pro</button>
+            </div>
+
+            <div id="fiches-content" class="hidden">
+                <button onclick="backToLevels('fiches')" style="background:none; border:none; color:var(--primary); cursor:pointer; margin-bottom:15px;">← Retour aux niveaux</button>
+                <h3 id="fiches-subtitle">Niveau</h3>
+                
+                <div style="display: flex; justify-content: space-around; gap: 10px;">
+                    <div style="flex: 1; background: #e9f5ee; padding: 10px; border-radius: 8px;">
+                        <h4 style="margin-top:0">Maths</h4>
+                        <div id="fiches-maths-list"></div>
+                    </div>
+                    <div style="flex: 1; background: #f0f0f0; padding: 10px; border-radius: 8px;">
+                        <h4 style="margin-top:0">Sciences</h4>
+                        <div id="fiches-sciences-list"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="videos" class="section">
         <div class="card">
-            <h2>Vidéos de cours</h2>
-            
-            <h3>2nde Bac Pro</h3>
-            <p><a href="#">Maths</a> | <a href="#">Sciences</a></p>
-            <hr>
-            
-            <h3>1ère Bac Pro</h3>
-            <p><a href="#">Maths</a> | <a href="#">Sciences</a></p>
-            <hr>
-            
-            <h3>Tle Bac Pro</h3>
-            <p><a href="#">Maths</a> | <a href="#">Sciences</a></p>
+            <h2>Vidéos</h2>
+            <div id="videos-levels">
+                <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', '2nd')">2nd Bac Pro</button>
+                <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', '1ere')">1ère Bac Pro</button>
+                <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', 'tle')">Tle Bac Pro</button>
+            </div>
+
+            <div id="videos-content" class="hidden">
+                <button onclick="backToLevels('videos')" style="background:none; border:none; color:var(--primary); cursor:pointer; margin-bottom:15px;">← Retour aux niveaux</button>
+                <h3 id="videos-subtitle">Niveau</h3>
+                
+                <div style="display: flex; justify-content: space-around; gap: 10px;">
+                    <div style="flex: 1; background: #e9f5ee; padding: 10px; border-radius: 8px;">
+                        <h4 style="margin-top:0">Maths</h4>
+                        <div id="videos-maths-list"></div>
+                    </div>
+                    <div style="flex: 1; background: #f0f0f0; padding: 10px; border-radius: 8px;">
+                        <h4 style="margin-top:0">Sciences</h4>
+                        <div id="videos-sciences-list"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -224,6 +245,44 @@ function sendToGoogle() {
     let finalUrl = formsUrl.replace("NOM_ICI", encodeURIComponent(userPseudo))
                            .replace("NOTE_ICI", encodeURIComponent(userScore));
     window.location.href = finalUrl;
+}
+
+function showSubLevel(section, level) {
+    // On cache les gros boutons de niveau
+    document.getElementById(section + '-levels').classList.add('hidden');
+    // On affiche la zone de contenu (colonnes)
+    const contentArea = document.getElementById(section + '-content');
+    contentArea.classList.remove('hidden');
+    
+    const subtitle = document.getElementById(section + '-subtitle');
+    const mathsList = document.getElementById(section + '-' + 'maths-list');
+    const sciencesList = document.getElementById(section + '-' + 'sciences-list');
+    
+    // On vide les listes avant de remplir
+    mathsList.innerHTML = "";
+    sciencesList.innerHTML = "";
+
+    if (level === '1ere') {
+        subtitle.innerText = "Niveau : 1ère Bac Pro";
+        if (section === 'fiches') {
+            // AJOUT DE VOTRE FICHIER GITHUB ICI
+            mathsList.innerHTML = '<a href="Formules_maths_1ère.pdf" target="_blank" style="display:block; margin-bottom:10px; color:#2d6a4f; text-decoration:none; font-weight:bold;">📄 Formules à apprendre</a>';
+            sciencesList.innerHTML = '<p style="font-size:12px; color:#999;">Aucune fiche</p>';
+        }
+    } else if (level === '2nd') {
+        subtitle.innerText = "Niveau : 2nde Bac Pro";
+        mathsList.innerHTML = '<p style="font-size:12px; color:#999;">À venir...</p>';
+        sciencesList.innerHTML = '<p style="font-size:12px; color:#999;">À venir...</p>';
+    } else {
+        subtitle.innerText = "Niveau : Tle Bac Pro";
+        mathsList.innerHTML = '<p style="font-size:12px; color:#999;">À venir...</p>';
+        sciencesList.innerHTML = '<p style="font-size:12px; color:#999;">À venir...</p>';
+    }
+}
+
+function backToLevels(section) {
+    document.getElementById(section + '-levels').classList.remove('hidden');
+    document.getElementById(section + '-content').classList.add('hidden');
 }
 </script>
 </body>
