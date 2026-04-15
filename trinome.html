@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+	<title>trinome</title>
+	<style>
+		html {
+			height:100%;
+		}
+		body {
+			background-color:#FFFFFF;
+			margin:0;
+			height:100%;
+		}
+	</style>
+	<!-- copy these lines to your document head: -->
+
+	<meta name="viewport" content="user-scalable=yes, width=800" />
+	
+	<script type="text/javascript">
+function Trace_lignes_1() {
+
+// Trace deux lignes dans le canvas.
+
+// Création de deux variables pour accéder au canvas
+var c = document.getElementById("myCanvas");   
+var ctx = c.getContext("2d");
+
+ctx.beginPath();
+ctx.moveTo(0, c.height/2); // va à gauche, au milieu vertical du canvas
+ctx.lineTo(c.width-1, c.height/2); // trace une ligne
+
+ctx.moveTo(c.width/2, 0); // va au milieu horizontal du canvas, en haut
+ctx.lineTo(c.width/2, c.height-1); // trace une ligne
+
+ctx.stroke(); // c'est ici que les traits sont effectivement tracés.
+} // Trace_lignes_1
+</script>
+
+
+
+<script type="text/javascript">
+
+function Effacer() {
+
+// Efface le canvas
+
+// Création de deux variables pour accéder au canvas
+var c = document.getElementById("myCanvas");   
+var ctx = c.getContext("2d");
+
+ctx.strokeStyle="#000000";
+ctx.beginPath();
+ctx.clearRect(0, 0, c.width, c.height);
+} // Effacer
+
+</script>
+
+
+<script type="text/javascript">
+function Parabole() {
+
+// Création de deux variables pour accéder au canvas
+var c = document.getElementById("myCanvas");   
+var ctx = c.getContext("2d");
+
+// paramètres :
+var vA = parseFloat(document.getElementById("an").value);
+var vB = parseFloat(document.getElementById("bn").value);
+var vC = parseFloat(document.getElementById("cn").value);
+var nX = 0;  // pour parcourir les pixels horizontaux
+var vX = 0.0;
+var vY = 0.0;
+
+// premier point
+vX = -3;
+vY = vA * vX*vX + vB * vX + vC;
+vY = c.height/2 - vY*c.height/18;
+ctx.beginPath();
+ctx.moveTo(0, vY);
+
+// trace la parabole
+for (nX=0; nX<c.width; nX++) {
+  // conversion de pixels en coord. du graphique
+  vX = -3 + 6 * nX / c.width; // va de -3 à +3
+  vY = vA * vX*vX + vB * vX + vC;
+  vY = c.height/2 - vY*c.height/18;
+  ctx.lineTo(nX, vY);  
+  }
+
+ctx.stroke(); // trace les lignes formant la parabole.
+} // Parabole
+
+
+</script>
+
+	
+
+	<!-- end copy -->
+  </head>
+  <body>
+	<!-- copy these lines to your document: -->
+
+	<div id="trinome_hype_container" style="margin:auto;position:relative;width:800px;height:480px;overflow:hidden;">
+		<script type="text/javascript" charset="utf-8" src="trinome.hyperesources/trinome_hype_generated_script.js?60241"></script>
+	</div>
+
+	<!-- end copy -->
+	
+
+
+	<!-- text content for search engines: -->
+
+	<div style="display:none" aria-hidden=true>
+
+		<div></div>
+
+		<div>x2 +           x   +
+EndFragment</div>
+		<div></div>
+		<div></div>
+		<div>
+</div>
+		<div>Votre navigateur ne supporte pas le tag <canvas>.</div>
+		<div></div>
+		<div>Second degré</div>
+		<div>Calculer</div>
+		<div>ax2 + bx + c
+EndFragment</div>
+		<div>Effacer</div>
+
+	</div>
+
+	<!-- end text content: -->
+
+  </body>
+</html>
