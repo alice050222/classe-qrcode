@@ -32,6 +32,25 @@
         
         h2 { color: var(--primary); margin-top: 0; }
         .msg-info { color: #666; font-style: italic; }
+
+        .btn-app {
+            display: block;
+            background-color: #e9f5ee;
+            color: #2d6a4f;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid #2d6a4f;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .btn-app:hover {
+            background-color: #2d6a4f;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -99,10 +118,19 @@
         </div>
     </section>
 
-    <section id="apps" class="section">
+<section id="apps" class="section">
         <div class="card">
-            <h2>Applications</h2>
-            <p class="msg-info">[Emplacement à rajouter : Exercices interactifs ou LearningApps]</p>
+            <h2>Applications Interactives</h2>
+            <p style="font-size: 0.9em; color: #666; margin-bottom: 20px;">
+                Cliquez sur une application pour la lancer dans un nouvel onglet.
+            </p>
+            
+            <div id="liste-applications">
+                <a href="trinome.html" target="_blank" class="btn-app">
+                    🎮 Appli : Le Trinôme (Second degré)
+                </a>
+                
+                </div>
         </div>
     </section>
 
