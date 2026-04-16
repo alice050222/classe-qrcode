@@ -95,6 +95,7 @@
         <div class="card">
             <h2>Vidéos</h2>
             <div id="videos-levels">
+                <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', 'Calculatrice')">Calculatrice</button>
                 <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', '2nd')">2nd Bac Pro</button>
                 <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', '1ere')">1ère Bac Pro</button>
                 <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', 'tle')">Tle Bac Pro</button>
@@ -285,6 +286,7 @@ function showSubLevel(section, level) {
     const subtitle = document.getElementById(section + '-subtitle');
     const mathsList = document.getElementById(section + '-' + 'maths-list');
     const sciencesList = document.getElementById(section + '-' + 'sciences-list');
+    const calculatriceList = document.getElementById(section + '-' + 'calculatrice-list');
     
     // On vide les listes avant de remplir
     mathsList.innerHTML = "";
@@ -308,6 +310,7 @@ function showSubLevel(section, level) {
             mathsList.innerHTML = '<a href="https://youtu.be/sI3z-M3P0VM" target="_blank" style="display:block; margin-bottom:15px; color:#2d6a4f; text-decoration:none; font-weight:bold;">▶️ Vidéo : Union et intersection</a>'+
                                   '<a href="https://youtu.be/9ztZv5jXdSo" target="_blank" style="display:block; margin-bottom:15px; color:#2d6a4f; text-decoration:none; font-weight:bold;">▶️ Vidéo : Ajustement affine</a>'; 
             sciencesList.innerHTML = '<a href="https://youtu.be/EY_4e3gp5_A" target="_blank" style="display:block; margin-bottom:15px; color:#2d6a4f; text-decoration:none; font-weight:bold;">▶️ Vidéo : Force et Pression</a>';
+            calculatriceList.innerHTML = '<a href="https://youtu.be/cW9fO3e8pw4" target="_blank" style="display:block; margin-bottom:15px; color:#2d6a4f; text-decoration:none; font-weight:bold;">▶️ Vidéo : Comment tracer une fonction sur la TI?</a>';
         }
         
 
