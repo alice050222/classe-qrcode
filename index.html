@@ -291,6 +291,7 @@ function showSubLevel(section, level) {
     // On vide les listes avant de remplir
     mathsList.innerHTML = "";
     sciencesList.innerHTML = "";
+    calculatriceList.innerHTML = "";
 
     if (level === '1ere') {
         subtitle.innerText = "Niveau : 1ère Bac Pro";
@@ -310,10 +311,14 @@ function showSubLevel(section, level) {
             mathsList.innerHTML = '<a href="https://youtu.be/sI3z-M3P0VM" target="_blank" style="display:block; margin-bottom:15px; color:#2d6a4f; text-decoration:none; font-weight:bold;">▶️ Vidéo : Union et intersection</a>'+
                                   '<a href="https://youtu.be/9ztZv5jXdSo" target="_blank" style="display:block; margin-bottom:15px; color:#2d6a4f; text-decoration:none; font-weight:bold;">▶️ Vidéo : Ajustement affine</a>'; 
             sciencesList.innerHTML = '<a href="https://youtu.be/EY_4e3gp5_A" target="_blank" style="display:block; margin-bottom:15px; color:#2d6a4f; text-decoration:none; font-weight:bold;">▶️ Vidéo : Force et Pression</a>';
-            calculatriceList.innerHTML = '<a href="https://youtu.be/cW9fO3e8pw4" target="_blank" style="display:block; margin-bottom:15px; color:#2d6a4f; text-decoration:none; font-weight:bold;">▶️ Vidéo : Comment tracer une fonction sur la TI?</a>';
-        }
+            }
         
-
+    if (level === 'calculatrice') {
+        subtitle.innerText = "Calculatrice";
+        if section === 'videos') {
+            calculatriceList.innerHTML = '<a href="https://youtu.be/cW9fO3e8pw4" target="_blank" style="display:block; margin-bottom:15px; color:#2d6a4f; text-decoration:none; font-weight:bold;">▶️ Vidéo : Comment tracer une fonction sur la TI?</a>';
+            }
+    }
     } else if (level === '2nd') {
         subtitle.innerText = "Niveau : 2nde Bac Pro";
         mathsList.innerHTML = '<p style="font-size:12px; color:#999;">À venir...</p>';
