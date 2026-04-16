@@ -312,7 +312,7 @@ function showSubLevel(section, level) {
                                   '<a href="https://youtu.be/9ztZv5jXdSo" target="_blank" style="display:block; margin-bottom:15px; color:#2d6a4f; text-decoration:none; font-weight:bold;">▶️ Vidéo : Ajustement affine</a>'; 
             sciencesList.innerHTML = '<a href="https://youtu.be/EY_4e3gp5_A" target="_blank" style="display:block; margin-bottom:15px; color:#2d6a4f; text-decoration:none; font-weight:bold;">▶️ Vidéo : Force et Pression</a>';
             }
-        
+    }
     if (level === 'calculatrice') {
         subtitle.innerText = "Calculatrice";
         if section === 'videos') {
@@ -328,7 +328,7 @@ function showSubLevel(section, level) {
         mathsList.innerHTML = '<p style="font-size:12px; color:#999;">À venir...</p>';
         sciencesList.innerHTML = '<p style="font-size:12px; color:#999;">À venir...</p>';
     }
-}
+
 
 function backToLevels(section) {
     document.getElementById(section + '-levels').classList.remove('hidden');
