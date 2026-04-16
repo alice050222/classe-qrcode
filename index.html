@@ -92,32 +92,44 @@
     </section>
 
     <section id="videos" class="section">
-        <div class="card">
-            <h2>Vidéos</h2>
-            <div id="videos-levels">
-                <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', 'Calculatrice')">Calculatrice</button>
-                <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', '2nd')">2nd Bac Pro</button>
-                <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', '1ere')">1ère Bac Pro</button>
-                <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', 'tle')">Tle Bac Pro</button>
-            </div>
+    <div class="card">
+        <h2>Vidéos</h2>
 
-            <div id="videos-content" class="hidden">
-                <button onclick="backToLevels('videos')" style="background:none; border:none; color:var(--primary); cursor:pointer; margin-bottom:15px;">← Retour aux niveaux</button>
-                <h3 id="videos-subtitle">Niveau</h3>
-                
-                <div style="display: flex; justify-content: space-around; gap: 10px;">
-                    <div style="flex: 1; background: #e9f5ee; padding: 10px; border-radius: 8px;">
-                        <h4 style="margin-top:0">Maths</h4>
-                        <div id="videos-maths-list"></div>
-                    </div>
-                    <div style="flex: 1; background: #f0f0f0; padding: 10px; border-radius: 8px;">
-                        <h4 style="margin-top:0">Sciences</h4>
-                        <div id="videos-sciences-list"></div>
-                    </div>
+        <div style="background: #fdf2f2; border-left: 5px solid #e63946; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
+            <h3 style="margin-top:0; color:#e63946;">📟 Tutos Calculatrice</h3>
+            <div id="tutos-list">
+                <a href="https://youtu.be/cW9fO3e8pw4" target="_blank" style="display:block; color:#333; text-decoration:none; font-weight:bold;">
+                    ▶️ Comment utiliser les fonctions de base avec la TI
+                </a>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px dashed #ccc; margin: 20px 0;">
+
+        <h3>Cours par niveau</h3>
+        <div id="videos-levels">
+            <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', '2nd')">2nd Bac Pro</button>
+            <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', '1ere')">1ère Bac Pro</button>
+            <button class="btn" style="margin-bottom:10px" onclick="showSubLevel('videos', 'tle')">Tle Bac Pro</button>
+        </div>
+
+        <div id="videos-content" class="hidden">
+            <button onclick="backToLevels('videos')" style="background:none; border:none; color:var(--primary); cursor:pointer; margin-bottom:15px;">← Retour aux niveaux</button>
+            <h3 id="videos-subtitle">Niveau</h3>
+            
+            <div style="display: flex; justify-content: space-around; gap: 10px;">
+                <div style="flex: 1; background: #e9f5ee; padding: 10px; border-radius: 8px;">
+                    <h4 style="margin-top:0">Maths</h4>
+                    <div id="videos-maths-list"></div>
+                </div>
+                <div style="flex: 1; background: #f0f0f0; padding: 10px; border-radius: 8px;">
+                    <h4 style="margin-top:0">Sciences</h4>
+                    <div id="videos-sciences-list"></div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
 <section id="apps" class="section">
         <div class="card">
