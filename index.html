@@ -144,17 +144,17 @@
             <button onclick="backToLevels('videos')" style="background:none; border:none; color:var(--primary); cursor:pointer; margin-bottom:15px;">← Retour aux niveaux</button>
             <h3 id="videos-subtitle">Niveau</h3>
     
-            <button class="accordion" onclick="toggleAccordion('maths-folder')">➕ Mathématiques</button>
-            <div id="maths-folder" class="panel">
+            <button class="accordion" onclick="toggleAccordion('maths-folder-vid')">➕ Mathématiques</button>
+            <div id="maths-folder-vid" class="panel">
             <div id="videos-maths-list"></div>
             </div>
 
-            <button class="accordion" onclick="toggleAccordion('sciences-folder')">➕ Sciences Physiques</button>
-            <div id="sciences-folder" class="panel">
+            <button class="accordion" onclick="toggleAccordion('sciences-folder-vid')">➕ Sciences Physiques</button>
+            <div id="sciences-folder_vid" class="panel">
             <div id="videos-sciences-list"></div>
             </div>
             </div>
-        </div>
+        
     </div>
 </section>
 
@@ -386,6 +386,10 @@ function showSubLevel(section, level) {
 function backToLevels(section) {
     document.getElementById(section + '-levels').classList.remove('hidden');
     document.getElementById(section + '-content').classList.add('hidden');
+    const panels = document.querySelectorAll('.panel');
+    panels.forEach(p => p.style.maxHeight = null);
+    const accordions = document.querySelectorAll('.accordion');
+    accordions.forEach(a => a.innerHTML = a.innerHTML.replace("➖", "➕"));
 }
     function toggleAccordion(id) {
     var panel = document.getElementById(id);
